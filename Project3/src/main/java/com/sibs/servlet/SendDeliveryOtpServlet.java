@@ -8,15 +8,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.Properties;
-import java.util.Random;
 
 @WebServlet("/sendDeliveryOtp")
 public class SendDeliveryOtpServlet extends HttpServlet {
 
-    // ── Same Gmail credentials as EmailService ─────────────────
-    private static final String FROM_EMAIL = "umallagundla@gmail.com";
-    private static final String PASSWORD   = "uoaj picn gymj omdy";
+    // ── Email credentials come from environment variables (same as EmailService) ──
+    //   SIBS_MAIL_FROM=you@gmail.com
+    //   SIBS_MAIL_PASSWORD=your_gmail_app_password
+    private static final String FROM_EMAIL = System.getenv("SIBS_MAIL_FROM");
+    private static final String PASSWORD   = System.getenv("SIBS_MAIL_PASSWORD");
+
+    private static final SecureRandom RANDOM = new SecureRandom();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
@@ -49,7 +53,7 @@ public class SendDeliveryOtpServlet extends HttpServlet {
         }
 
         // 4. Generate 6-digit OTP
-        String otp = String.format("%06d", new Random().nextInt(999999));
+        String otp = String.format("%06d", RANDOM.nextInt(1_000_000));
 
         // 5. Store details + OTP in session
         HttpSession session = req.getSession();
@@ -64,17 +68,19 @@ public class SendDeliveryOtpServlet extends HttpServlet {
         // 6. Send OTP email
         boolean sent = sendOtpEmail(email, name, otp);
 
-        if (sent) {
-            res.sendRedirect("delivery-register.jsp?msg=otpSent");
-        } else {
+        if (!sent) {
             // OTP email failed — still let them proceed (show OTP in console for dev)
             System.out.println("[DEV] OTP for " + email + " = " + otp);
-            res.sendRedirect("delivery-register.jsp?msg=otpSent");
         }
+        res.sendRedirect("delivery-register.jsp?msg=otpSent");
     }
 
     // ── Send OTP email via Gmail SMTP ──────────────────────────
     private boolean sendOtpEmail(String toEmail, String name, String otp) {
+        if (FROM_EMAIL == null || FROM_EMAIL.isBlank() || PASSWORD == null || PASSWORD.isBlank()) {
+            System.err.println("[OTP] Email not configured: set SIBS_MAIL_FROM and SIBS_MAIL_PASSWORD");
+            return false;
+        }
         try {
             Properties props = new Properties();
             props.put("mail.smtp.host",           "smtp.gmail.com");
