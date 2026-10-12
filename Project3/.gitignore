@@ -1,0 +1,21 @@
+# Build output
+build/
+target/
+*.class
+
+# IDE
+.settings/
+.classpath
+.project
+.idea/
+*.iml
+
+# Secrets — never commit
+db.properties
+razorpay.properties
+src/main/java/razorpay.properties
+build/classes/db.properties
+
+# OS
+.DS_Store
+Thumbs.db

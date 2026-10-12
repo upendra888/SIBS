@@ -1,0 +1,5 @@
+# Copy to src/main/java/razorpay.properties (or src/main/resources/razorpay.properties)
+# and add razorpay.properties to .gitignore. Do not commit real secrets.
+
+razorpay.key.id=rzp_test_YOUR_KEY_ID
+razorpay.key.secret=YOUR_KEY_SECRET

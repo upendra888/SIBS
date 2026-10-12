@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee 
+         https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+
+    <!-- ================= WELCOME PAGE ================= -->
+    <welcome-file-list>
+        <welcome-file>customer-login.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- Optional: set Razorpay keys here or via environment variables RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET -->
+    <context-param>
+        <param-name>razorpay.key.id</param-name>
+        <param-value></param-value>
+    </context-param>
+    <context-param>
+        <param-name>razorpay.key.secret</param-name>
+        <param-value></param-value>
+    </context-param>
+
+    <!-- ================= ASSIGN DELIVERY ================= -->
+    <servlet>
+        <servlet-name>RedeliverServlet</servlet-name>
+        <servlet-class>com.sibs.servlet.RedeliverServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RedeliverServlet</servlet-name>
+        <url-pattern>/RedeliverServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AssignDeliveryServlet</servlet-name>
+        <servlet-class>com.sibs.servlet.AssignDeliveryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AssignDeliveryServlet</servlet-name>
+        <url-pattern>/AssignDeliveryServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- ================= DELIVERY BOY LOGIN ================= -->
+    <servlet>
+        <servlet-name>DeliveryBoyLoginServlet</servlet-name>
+        <servlet-class>com.sibs.servlet.DeliveryBoyLoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeliveryBoyLoginServlet</servlet-name>
+        <url-pattern>/deliveryLogin</url-pattern>
+    </servlet-mapping>
+
+    <!-- ================= ADD DELIVERY BOY ================= -->
+    <servlet>
+        <servlet-name>AddDeliveryBoyServlet</servlet-name>
+        <servlet-class>com.sibs.servlet.AddDeliveryBoyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddDeliveryBoyServlet</servlet-name>
+        <url-pattern>/addDeliveryBoy</url-pattern>
+    </servlet-mapping>
+
+    <!-- ================= DELETE DELIVERY BOY ================= -->
+    <servlet>
+        <servlet-name>DeleteDeliveryBoyServlet</servlet-name>
+        <servlet-class>com.sibs.servlet.DeleteDeliveryBoyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteDeliveryBoyServlet</servlet-name>
+        <url-pattern>/deleteDeliveryBoy</url-pattern>
+    </servlet-mapping>
+
+    <!-- ================= DELIVERY LOGOUT ================= -->
+    <servlet>
+        <servlet-name>DeliveryLogoutServlet</servlet-name>
+        <servlet-class>com.sibs.servlet.DeliveryLogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeliveryLogoutServlet</servlet-name>
+        <url-pattern>/deliveryLogout</url-pattern>
+    </servlet-mapping>
+
+    <!-- ================= CONFIRM PICKUP ================= -->
+    <servlet>
+        <servlet-name>ConfirmPickupServlet</servlet-name>
+        <servlet-class>com.sibs.servlet.ConfirmPickupServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConfirmPickupServlet</servlet-name>
+        <url-pattern>/confirmPickup</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- ================= VERIFY OTP ================= -->
+    <servlet>
+        <servlet-name>VerifyOtpServlet</servlet-name>
+        <servlet-class>com.sibs.servlet.VerifyOtpServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VerifyOtpServlet</servlet-name>
+        <url-pattern>/verifyOtp</url-pattern>
+    </servlet-mapping>
+
+    <!--
+        The following servlets use @WebServlet annotations — NO web.xml entry needed:
+        - MarkDeliveredServlet       (@WebServlet("/markDelivered"))
+        - CancelOrderServlet         (@WebServlet("/cancelOrder"))
+        - UpdateOrderServlet         (@WebServlet("/updateOrder"))
+        - PlaceOrderServlet          (@WebServlet("/placeOrder"))
+        - ReturnProductServlet       (@WebServlet)
+        - AdminReturnServlet         (@WebServlet)
+        - Returnrequestservlet       (@WebServlet)
+        - Processreturnservlet       (@WebServlet)
+    -->
+
+
+    <!-- ================= SUPPORT (STAFF) ================= -->
+    <!-- SupportServlet uses @WebServlet("/support") — no entry needed here -->
+
+    <!-- ================= RAISE COMPLAINT ================= -->
+    <!-- RaiseComplaintServlet uses @WebServlet("/raiseComplaint") -->
+    <!-- multipart-config is set via @MultipartConfig annotation on the class -->
+
+    <!-- ================= DELIVERY DEPOSIT ================= -->
+    <servlet>
+        <servlet-name>DeliveryDepositServlet</servlet-name>
+        <servlet-class>com.sibs.servlet.DeliveryDepositServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeliveryDepositServlet</servlet-name>
+        <url-pattern>/deliveryDeposit</url-pattern>
+    </servlet-mapping>
+    
+
+</web-app>
